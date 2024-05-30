@@ -14,15 +14,28 @@ services:
     restart: unless-stopped
     networks:
       - backend
+    volumes:
+      - ./certbot/certs/:/etc/nginx/ssl/:rw
+    depends_on:
+      certbot:
+        condition: service_completed_successfully
+      linux_tweet_app:
+        condition: service_started
 
   linux_tweet_app:
     build: ./linux_tweet_app
     restart: unless-stopped
     ports:
-      - "8080:80"
-      - "8443:443"
+      - "127.0.0.1:8080:80"
     networks:
       - backend
+
+  certbot:
+    build: ./certbot
+    volumes:
+      - ./certbot/certs/:/etc/letsencrypt/:rw
+    ports:
+      - "80:80"
 
 networks:
   backend:
