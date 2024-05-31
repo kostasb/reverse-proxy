@@ -18,13 +18,13 @@ services:
       - ./certbot/certs/:/etc/nginx/ssl/:rw
       - ./nginx/autoreload.sh:/docker-entrypoint.d/autoreload.sh
     depends_on:
-      #  certbot:
-      #    condition: service_completed_successfully
+      certbot:
+        condition: service_completed_successfully
       linux_tweet_app:
         condition: service_started
 
   linux_tweet_app:
-    build: ./linux_tweet_app
+    build: "./gitclone/apps/linux_tweet_app_${UNIQUE_ID}"
     healthcheck:
       test: [ "CMD", "curl", "linux_tweet_app:80" ]
       interval: 30s
@@ -40,17 +40,19 @@ services:
   certbot_renew:
     build: ./certbot-renew
     restart: unless-stopped
-    stop_grace_period: 1s
+    stop_grace_period: 0s
     volumes:
       - ./certbot/certs/:/etc/letsencrypt/:rw
       - ./certbot-renew/renewloop.sh:/renewloop.sh
 
-#  certbot:
-#    build: ./certbot
-#    volumes:
-#      - ./certbot/certs/:/etc/letsencrypt/:rw
-#    ports:
-#      - "80:80"
+  certbot:
+    build: ./certbot
+    stop_grace_period: 0s
+    volumes:
+      - ./certbot/certs/:/etc/letsencrypt/:rw
+      - ./certbot/init.sh:/init.sh
+    ports:
+      - "80:80"
 
 networks:
   backend:
