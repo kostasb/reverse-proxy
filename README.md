@@ -34,6 +34,23 @@ The following scripts can be used to manage the environment:
 
 - `e2e-tests.sh`: Expects parameter `-d domain` and runs basic functional tests against the target domain/web service that validate the environment's characteristics: response code, redirection and certificate match.
 
+### Runtime State
+
+The `gitclone`, `certbot` and `e2etests` containers only run ephemerally.
+The persistent containers that can be found in the `docker ps` output once the environment is fully initiallized are:
+
+- `nginx`: Serves the public endpoint and acts as reverse proxy to the linux_tweet_app. Reloads periodically to pick up new certificates if needed.
+- `linux_tweet_app`: Binds on local endpoint and serves the app site.
+- `certbot_renew`: Monitors certificate validity and renews them if needed.
+
+```
+% docker ps
+CONTAINER ID   IMAGE                  COMMAND                  CREATED          STATUS                    PORTS                                      NAMES
+9092794a430e   test-nginx             "/docker-entrypoint.…"   57 minutes ago   Up 52 seconds (healthy)   0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp   test-nginx-1
+405c6c3d92da   test-linux_tweet_app   "/docker-entrypoint.…"   57 minutes ago   Up 53 seconds (healthy)   443/tcp, 127.0.0.1:8080->80/tcp            test-linux_tweet_app-1
+38dfc2d9c054   test-certbot_renew     "/bin/sh /renewloop.…"   57 minutes ago   Up 53 seconds             80/tcp, 443/tcp                            test-certbot_renew-1
+```
+
 ## Diagram
 
 ![diagram](https://github.com/kostasb/reverse-proxy/assets/15780449/9aa595b0-1115-479c-aef3-277c4e12c184)
