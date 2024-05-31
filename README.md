@@ -33,3 +33,7 @@ The following scripts can be used to manage the environment:
     **Note:** Artifacts such as container layers, images and networks will remain on the Docker host even after executing the stop script. The command `docker system prune` can be used to clean up storage space.
 
 - `e2e-tests.sh`: Expects parameter `-d domain` and runs basic functional tests against the target domain/web service that validate the environment's characteristics: response code, redirection and certificate match.
+
+## Diagram
+
+![diagram](https://github.com/kostasb/reverse-proxy/assets/15780449/b613ac26-0d35-4baa-8bb4-1a894daa8683)
