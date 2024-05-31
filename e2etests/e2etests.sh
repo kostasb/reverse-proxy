@@ -1,21 +1,21 @@
 #!/bin/sh
-echo "> Running Test Suite"
+echo ">>>> Running Test Suite"
 TEST_STATUS="ok"
 curl_output=`curl -vsL http://kostasbotsas.com 2>&1 -o /dev/null`
 #Test 301 redirect
 test_redirect=`echo $curl_output | grep "< HTTP/1.1 301"|wc -l|sed 's/ //g'`
 if [ $test_redirect -eq 1 ]; then
-    echo ">>> Redirect 301 test passed successfully."
+    echo "> Redirect 301 test passed successfully."
 else
-    echo ">>> TEST FAILED: Redirect 301"
+    echo "> TEST FAILED: Redirect 301"
     TEST_STATUS="fail"
 fi
 #Test 200 response
 test_response_code=`echo $curl_output | grep "< HTTP/1.1 200"|wc -l|sed 's/ //g'`
 if [ $test_response_code -eq 1 ]; then
-    echo ">>> Response code 200 test passed successfully."
+    echo ">> Response code 200 test passed successfully."
 else
-    echo ">>> TEST FAILED: Response code 200"
+    echo ">> TEST FAILED: Response code 200"
     TEST_STATUS="fail"
 fi
 #Test CN
@@ -28,7 +28,7 @@ else
 fi
 
 if [ $TEST_STATUS = "fail" ]; then
-    echo "> Test Suite FAILED"
+    echo ">>>> Test Suite \033[31mFAILED\033"
 else
-    echo "> Test Suite PASSED"
+    echo ">>>> Test Suite \033[32mPASSED\033"
 fi

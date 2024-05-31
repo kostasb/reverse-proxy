@@ -1,5 +1,5 @@
 #!/bin/sh
-
+BOOT_WAIT_TIME=10
 usage="$(basename "$0") [-d] [-e] -- Start Certbot, Nginx reverse proxy and App.\nRequired parameters:\n -d CN\n -e email"
 
 while getopts d:e:h flag
@@ -26,8 +26,8 @@ if [ "$?" -eq 0 ];
 then
     echo "Starting services"
     docker compose up -d
-    echo "Waiting for services to initialize..."
-    sleep 10
+    echo "Waiting $BOOT_WAIT_TIME seconds for services to boot before initiating e2e tests..."
+    sleep $BOOT_WAIT_TIME
     ./e2e-tests.sh -d $DOMAIN
 else
     echo "Error - could not clone linux_tweet_app"
