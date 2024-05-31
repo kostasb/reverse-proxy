@@ -12,5 +12,5 @@ if [ -d "/apps/linux_tweet_app" ]; then
         fi
     fi
 else
-    git clone -b master https://github.com/dockersamples/linux_tweet_app.git /apps/linux_tweet_app
+    git clone --depth=1 -b master https://github.com/dockersamples/linux_tweet_app.git /apps/linux_tweet_app
 fi
