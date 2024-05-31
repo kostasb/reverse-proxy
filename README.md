@@ -18,7 +18,7 @@ There are no external dependencies. Since all action run within Docker, this rep
 ## Usage
 The following scripts can be used to manage the environment:
 
-- `start-services.sh`: Requires `-d domain` and `-e email` parameters. Deploys the environment and runs e2e tests.
+- `start-services.sh`: Expects `-d domain` and `-e email` parameters. Deploys all services in the environment and calls e2e tests.
 
     Usage example:
 
@@ -32,4 +32,4 @@ The following scripts can be used to manage the environment:
 
     **Note:** Artifacts such as container layers, images and networks will remain on the Docker host even after executing the stop script. The command `docker system prune` can be used to clean up storage space.
 
-- `e2e-tests.sh`: Requires `-d domain` and runs basic functional tests against the target domain/web service that validate the environment's characteristics: response code, redirection and certificate match.
+- `e2e-tests.sh`: Expects parameter `-d domain` and runs basic functional tests against the target domain/web service that validate the environment's characteristics: response code, redirection and certificate match.
