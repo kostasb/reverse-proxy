@@ -12,6 +12,7 @@ services:
       start_period: 30s
       retries: 10
     restart: unless-stopped
+    stop_grace_period: 1s
     networks:
       - backend
     volumes:
@@ -24,7 +25,7 @@ services:
         condition: service_started
 
   linux_tweet_app:
-    build: "./gitclone/apps/linux_tweet_app_${UNIQUE_ID}"
+    build: "./gitclone/apps/linux_tweet_app"
     healthcheck:
       test: [ "CMD", "curl", "linux_tweet_app:80" ]
       interval: 30s
@@ -40,7 +41,7 @@ services:
   certbot_renew:
     build: ./certbot-renew
     restart: unless-stopped
-    stop_grace_period: 0s
+    stop_grace_period: 1s
     volumes:
       - ./certbot/certs/:/etc/letsencrypt/:rw
       - ./certbot-renew/renewloop.sh:/renewloop.sh
