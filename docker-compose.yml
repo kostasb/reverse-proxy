@@ -52,6 +52,9 @@ services:
     volumes:
       - ./certbot/certs/:/etc/letsencrypt/:rw
       - ./certbot/init.sh:/init.sh
+    environment:
+      - DOMAIN=${DOMAIN}
+      - EMAIL=${EMAIL}
     ports:
       - "80:80"
 
