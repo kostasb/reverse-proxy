@@ -36,4 +36,4 @@ The following scripts can be used to manage the environment:
 
 ## Diagram
 
-![diagram](https://github.com/kostasb/reverse-proxy/assets/15780449/b613ac26-0d35-4baa-8bb4-1a894daa8683)
+![diagram](https://github.com/kostasb/reverse-proxy/assets/15780449/9aa595b0-1115-479c-aef3-277c4e12c184)
