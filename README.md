@@ -26,10 +26,10 @@ The following scripts can be used to manage the environment:
     ./start-services.sh -d example.com -e admin@example.com
     ```
 
-    Note: Certbot (Let's encrypt) will not issue certificates for private or invalid domains. A real domain name is expected, and the IP/host its DNS record resolves to will be challenged against the system that runs this environment.
+    **Note:** [Certbot](https://certbot.eff.org/) ([Let's Encrypt](https://letsencrypt.org/getting-started/) client) will not issue certificates for private or invalid domains. A real domain name is expected, and the IP/host its DNS record resolves to will be challenged against the system that runs this environment.
 
 - `stop-services.sh`: Stops all the docker-compose containers which were spun up by `start-services.sh`.
 
-    Note: Artifacts such as container layers, images and networks will remain on the Docker host even after executing the stop script. The command `docker system prune` can be used to clean up storage space.
+    **Note:** Artifacts such as container layers, images and networks will remain on the Docker host even after executing the stop script. The command `docker system prune` can be used to clean up storage space.
 
 - `e2e-tests.sh`: Requires `-d domain` and runs basic functional tests against the target domain/web service that validate the environment's characteristics: response code, redirection and certificate match.
