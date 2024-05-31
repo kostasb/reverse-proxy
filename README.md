@@ -26,7 +26,7 @@ The following scripts can be used to manage the environment:
     ./start-services.sh -d example.com -e admin@example.com
     ```
 
-    **Note:** [Certbot](https://certbot.eff.org/) ([Let's Encrypt](https://letsencrypt.org/getting-started/) client) will not issue certificates for private or invalid domains. A real domain name is expected, and the IP/host its DNS record resolves to will be challenged against the system that runs this environment.
+    **Note:** [Certbot](https://certbot.eff.org/) ([Let's Encrypt](https://letsencrypt.org/getting-started/) client) will not issue certificates for private or invalid domains. A real domain name is expected and the host that its DNS record resolves to is challenged. The system that runs this environment must be publicly accessible on the advertised address from Let's Encrypt systems.
 
 - `stop-services.sh`: Stops all the docker-compose containers which were spun up by `start-services.sh`.
 
