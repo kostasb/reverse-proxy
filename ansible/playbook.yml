@@ -1,0 +1,55 @@
+---
+- hosts: all
+  become: true
+
+  tasks:
+    - name: Install required system packages
+      apt:
+        pkg:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+          - python3-pip
+        state: latest
+        update_cache: true
+
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+
+    - name: Update apt and install docker-ce
+      apt:
+        name: docker-ce
+        state: latest
+        update_cache: true
+
+    - name: Install Git
+      apt:
+        name: git
+        state: present
+        update_cache: yes
+
+    - name: Clone Git Repository
+      git:
+        repo: https://github.com/kostasb/reverse-proxy.git
+        dest: /home/ubuntu/reverse-proxy
+    
+    - name: Deploy reverse proxy environment
+      shell: cd /home/ubuntu/reverse-proxy && ./start-services.sh -d {{ inventory_hostname }} -e {{ email }}
+      register: script_output
+    
+    - debug: msg="{{ script_output.stderr }}"
+
+    - name: Run e2e tests
+      shell: cd /home/ubuntu/reverse-proxy && ./e2e-tests.sh -d {{ inventory_hostname }}
+      register: tests_output
+      failed_when: '"Test Suite PASSED" not in tests_output.stdout'
+
+    - debug: msg="{{ tests_output }}"

@@ -26,13 +26,23 @@ The following scripts can be used to manage the environment:
     ./start-services.sh -d example.com -e admin@example.com
     ```
 
-    **Note:** [Certbot](https://certbot.eff.org/) ([Let's Encrypt](https://letsencrypt.org/getting-started/) client) will not issue certificates for private or invalid domains. A real domain name is expected and the host that its DNS record resolves to is challenged. The system that runs this environment must be publicly accessible on the advertised address from Let's Encrypt systems.
+    **Note:** [Certbot](https://certbot.eff.org/) ([Let's Encrypt](https://letsencrypt.org/getting-started/) client) will not issue certificates for private or invalid domains. A real domain name is expected and the host that its DNS record resolves to is challenged. The system that runs this environment must be publicly accessible on the published address from Let's Encrypt systems.
 
 - `stop-services.sh`: Stops all the docker-compose containers which were spun up by `start-services.sh`.
 
     **Note:** Artifacts such as container layers, images and networks will remain on the Docker host even after executing the stop script. The command `docker system prune` can be used to clean up storage space.
 
 - `e2e-tests.sh`: Expects parameter `-d domain` and runs basic functional tests against the target domain/web service that validate the environment's characteristics: response code, redirection and certificate match.
+
+## Deployment
+
+The environment can be deployed on a target remote host using the included Ansible playbook.
+
+```
+ansible-playbook playbook.yml --private-key=/path/to/reverse-proxy.pem -u username -i DOMAIN, --extra-vars "email=EMAIL"
+```
+
+where DOMAIN is the hostname of the web server as well as the CN that the certificate will be issued for, and EMAIL is associated with the certificate.
 
 ### Runtime State
 

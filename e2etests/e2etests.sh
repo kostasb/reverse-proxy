@@ -28,7 +28,7 @@ else
 fi
 
 if [ $TEST_STATUS = "fail" ]; then
-    echo ">>>> Test Suite \033[31mFAILED\033"
+    echo ">>>> Test Suite FAILED"
 else
-    echo ">>>> Test Suite \033[32mPASSED\033"
+    echo ">>>> Test Suite PASSED"
 fi
