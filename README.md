@@ -17,7 +17,7 @@ It creates the following containers:
 
 The environment can be spun up on any host that supports the bash shell and runs a Docker server.
 All actions runs within Docker containers so there are no other external dependencies at the host level.
-The host must be accessible over public internet on ports 80 and 443, with a valid DNS record.
+The host must be accessible over public internet on ports 80 and 443 with a valid public DNS record.
 
 ## Manual Usage
 The following scripts can be used to start, test and stop the deployment:
