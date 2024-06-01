@@ -25,7 +25,7 @@ fi
 if [ "$?" -eq 0 ];
 then
     echo "Starting services"
-    docker compose up -d
+    docker compose up --build -d
     echo "Waiting $BOOT_WAIT_TIME seconds for services to boot before initiating e2e tests..."
     sleep $BOOT_WAIT_TIME
     ./e2e-tests.sh -d $DOMAIN

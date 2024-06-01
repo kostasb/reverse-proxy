@@ -1,7 +1,7 @@
 #!/bin/sh
 echo ">>>> Running Test Suite"
 TEST_STATUS="ok"
-curl_output=`curl -vsL http://kostasbotsas.com 2>&1 -o /dev/null`
+curl_output=`curl -vsL http://$DOMAIN 2>&1 -o /dev/null`
 #Test 301 redirect
 test_redirect=`echo $curl_output | grep "< HTTP/1.1 301"|wc -l|sed 's/ //g'`
 if [ $test_redirect -eq 1 ]; then
