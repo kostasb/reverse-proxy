@@ -18,6 +18,8 @@ services:
     volumes:
       - ./certbot/certs/:/etc/nginx/ssl/:rw
       - ./nginx/autoreload.sh:/docker-entrypoint.d/autoreload.sh
+    environment:
+      - DOMAIN=${DOMAIN}
     depends_on:
       certbot:
         condition: service_completed_successfully
