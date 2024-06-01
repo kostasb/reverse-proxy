@@ -2,11 +2,11 @@
 
 ## Overview
 
-An orchestrated deployment of a sample web app, reverse proxy and certificates.
+An orchestrated deployment of a sample web app and reverse proxy with generated Let's Encrypt certificates.
 
-Consists of:
+It creates the following artifacts:
 
-- Git clone of an example web app https://github.com/dockersamples/linux_tweet_app.
+- Ephemeral Git clone container to fetch an example web app https://github.com/dockersamples/linux_tweet_app.
 - Ephemeral Certbot (Let's Encrypt client) container to generate certificates for the given domain name and email address.
 - Sidecar Cerbot monitor container to renew certificates when expiration time approaches.
 - Sample Web app bound to localhost with healthcheck.
