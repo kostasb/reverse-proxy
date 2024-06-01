@@ -49,7 +49,7 @@ ansible-playbook playbook.yml --private-key=/path/to/reverse-proxy.pem -u userna
 DOMAIN is the hostname of the web server as well as the CN that the certificate will be issued for
 EMAIL is associated with the certificate.
 
-### Runtime State
+## Runtime State
 
 The `gitclone`, `certbot` and `e2etests` containers only run ephemerally.
 The persistent containers that can be found in the `docker ps` output once the environment is fully initiallized are:
