@@ -2,21 +2,25 @@
 
 ## Overview
 
-Web server environment orchestration that receives as arguments a domain name and email and deploys:
+An orchestrated deployment of a sample web app, reverse proxy and certificates.
 
-- A container that git clones an example web app https://github.com/dockersamples/linux_tweet_app.
-- Ephemeral Certbot (Let's encrypt) contain that generates certificates for the given domain name and email address.
-- Persistent Cerbot container to checks and renew certificates when they approach expiration time.
-- Example Web app bound to localhost, with healthcheck.
-- Nginx proxy that listens on public socket, redirects port 80 to 443 and enables SSL with the Certbot-provided certificates, with healthcheck.
-- E2E functional tests that verify public port availability, 80-to-443 redirection and certificate CN.
+Consists of:
+
+- Git clone of an example web app https://github.com/dockersamples/linux_tweet_app.
+- Ephemeral Certbot (Let's Encrypt client) container to generate certificates for the given domain name and email address.
+- Sidecar Cerbot monitor container to renew certificates when expiration time approaches.
+- Sample Web app bound to localhost with healthcheck.
+- Nginx proxy listening on public socket. Redirects port 80 to 443 and enables SSL using the Certbot-provided certificates with healthcheck.
+- Basic E2E functional tests to verify successful connection, 80-to-443 redirection and matching certificate CN.
 
 ## Prerequisites
 
-There are no external dependencies. Since all action run within Docker, this repo is compatible with any host that supports bash and Docker.
+The environment can be spun up on any host that supports the bash shell and runs a Docker server.
+All actions runs within Docker containers so there are no other external dependencies at the host level.
+The host must be accessible over public internet on ports 80 and 443, with a valid DNS record.
 
-## Usage
-The following scripts can be used to manage the environment:
+## Manual Usage
+The following scripts can be used to start, test and stop the deployment:
 
 - `start-services.sh`: Expects `-d domain` and `-e email` parameters. Deploys all services in the environment and calls e2e tests.
 
@@ -28,21 +32,22 @@ The following scripts can be used to manage the environment:
 
     **Note:** [Certbot](https://certbot.eff.org/) ([Let's Encrypt](https://letsencrypt.org/getting-started/) client) will not issue certificates for private or invalid domains. A real domain name is expected and the host that its DNS record resolves to is challenged. The system that runs this environment must be publicly accessible on the published address from Let's Encrypt systems.
 
-- `stop-services.sh`: Stops all the docker-compose containers which were spun up by `start-services.sh`.
+- `stop-services.sh`: Stops all docker containers which were spun up by `start-services.sh`.
 
     **Note:** Artifacts such as container layers, images and networks will remain on the Docker host even after executing the stop script. The command `docker system prune` can be used to clean up storage space.
 
-- `e2e-tests.sh`: Expects parameter `-d domain` and runs basic functional tests against the target domain/web service that validate the environment's characteristics: response code, redirection and certificate match.
+- `e2e-tests.sh`: Expects parameter `-d domain` and runs basic tests against the target domain/web service that validate the environment's functionality: response code, redirection and matching certificate CN.
 
-## Deployment
+## Automated Deployment
 
-The environment can be deployed on a target remote host using the included Ansible playbook.
+The environment can be deployed on a target host via SSH using the included Ansible playbook.
 
 ```
 ansible-playbook playbook.yml --private-key=/path/to/reverse-proxy.pem -u username -i DOMAIN, --extra-vars "email=EMAIL"
 ```
 
-where DOMAIN is the hostname of the web server as well as the CN that the certificate will be issued for, and EMAIL is associated with the certificate.
+DOMAIN is the hostname of the web server as well as the CN that the certificate will be issued for
+EMAIL is associated with the certificate.
 
 ### Runtime State
 
