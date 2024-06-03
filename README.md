@@ -46,7 +46,7 @@ The environment can be deployed on a target host via SSH using the included Ansi
 ansible-playbook playbook.yml --private-key=/path/to/reverse-proxy.pem -u username -i DOMAIN, --extra-vars "email=EMAIL"
 ```
 
-`DOMAIN` is the hostname of the web server as well as the CN that the certificate will be issued for. `EMAIL` is address to be associated with the certificate.
+`DOMAIN` is the hostname of the web server as well as the CN that the certificate will be issued for. `EMAIL` is the address to be associated with the certificate.
 
 ## Runtime State
 
