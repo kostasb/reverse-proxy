@@ -66,5 +66,6 @@ CONTAINER ID   IMAGE                  COMMAND                  CREATED          
 ```
 
 ## Diagram
+![diagram](https://github.com/kostasb/reverse-proxy/assets/15780449/b30affdc-123f-4634-bdd1-e66ee53a2717)
 
-![diagram](https://github.com/kostasb/reverse-proxy/assets/15780449/9aa595b0-1115-479c-aef3-277c4e12c184)
+
